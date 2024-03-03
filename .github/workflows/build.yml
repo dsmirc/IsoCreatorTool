@@ -1,4 +1,4 @@
-name: Compile C App
+name: Compile C# App
 
 on:
   push:
@@ -16,11 +16,15 @@ jobs:
       - name: Setup msbuild
         uses: microsoft/setup-msbuild@v1
 
-      - name: Compile for Windows
-        run: |
-          vcpkg install
-          vcpkg integrate install
-          msbuild IsoCreatorTool.sln
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: | 
+            3.1.x
+            4.6.1
+            5.0.x
+      - run: dotnet build IsoCreatorTool.sln
+
 
       - name: Upload Windows artifact
         uses: actions/upload-artifact@v2
