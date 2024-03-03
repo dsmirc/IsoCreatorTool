@@ -15,6 +15,7 @@ jobs:
       - name: Compile for Windows
         run: |
           choco install netfx-4.6.2-devpack
+          choco install netfx-4.6.1-devpack
           vcpkg install
           vcpkg integrate install
           msbuild IsoCreatorTool.sln
