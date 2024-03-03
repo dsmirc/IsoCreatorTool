@@ -1,0 +1,30 @@
+name: Compile C App
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup msbuild
+        uses: microsoft/setup-msbuild@v1
+
+      - name: Compile for Windows
+        run: |
+          mkdir build && cd build
+          vcpkg install
+          vcpkg integrate install
+          msbuild IsoCreatorTool.sln
+
+      - name: Upload Windows artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-executable
+          path: .
